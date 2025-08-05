@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= pageTitle %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+  <h2>Welcome <%= user.name %> 👋</h2>
+
+ <a href="/agent/properties/new" class="btn btn-success mb-3">➕ Add New Property</a>
+
+
+  <h4>My Properties</h4>
+  <table class="table">
+    <thead><tr><th>Title</th><th>Type</th><th>Location</th><th>Price</th><th>Action</th></tr></thead>
+    <tbody>
+      <% properties.forEach(p => { %>
+        <tr>
+          <td><%= p.title %></td>
+          <td><%= p.type %></td>
+          <td><%= p.location %></td>
+          <td>Rs. <%= p.price %></td>
+          <td>
+            <a href="/agent/properties/edit/<%= p._id %>" class="btn btn-sm btn-primary">Edit</a>
+            <form action="/agent/properties/delete/<%= p._id %>" method="POST" style="display:inline;">
+              <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>

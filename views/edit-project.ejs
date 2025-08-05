@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Project</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tahoma', Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    .main-header {
+      background: linear-gradient(135deg, #1F380C 0%, #2d5016 100%);
+      color: white;
+      padding: 20px 0;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .form-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 40px;
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      color: #1F380C;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #1F380C;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-control, .form-select {
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 12px 15px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #1F380C;
+      box-shadow: 0 0 0 0.2rem rgba(31, 56, 12, 0.15);
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1F380C 0%, #2d5016 100%);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #2d5016 0%, #1F380C 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(31, 56, 12, 0.3);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .amenity-item {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .amenity-item:hover {
+      border-color: #1F380C;
+      background: #f0f7eb;
+    }
+
+    .amenity-item input[type="checkbox"]:checked + label {
+      color: #1F380C;
+      font-weight: 600;
+    }
+
+    .form-check-input:checked {
+      background-color: #1F380C;
+      border-color: #1F380C;
+    }
+
+    .price-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .upload-area {
+      border: 2px dashed #1F380C;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      background: #f0f7eb;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .upload-area:hover {
+      background: #e8f5e0;
+      border-color: #2d5016;
+    }
+
+    .upload-icon {
+      font-size: 48px;
+      color: #1F380C;
+      margin-bottom: 15px;
+    }
+
+    .breadcrumb {
+      background: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb-item a {
+      color: #1F380C;
+      text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+      color: #666;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group-text {
+      background: #1F380C;
+      color: white;
+      border: none;
+      font-weight: 600;
+    }
+
+    .current-images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .image-card {
+      background: white;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .image-card:hover {
+      border-color: #1F380C;
+      box-shadow: 0 4px 15px rgba(31, 56, 12, 0.1);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .image-label {
+      font-size: 12px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .no-images-message {
+      text-align: center;
+      padding: 40px;
+      background: #f8f9fa;
+      border: 2px dashed #dee2e6;
+      border-radius: 10px;
+      color: #6c757d;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 20px;
+        margin: 15px;
+      }
+      
+      .price-inputs {
+        grid-template-columns: 1fr;
+      }
+      
+      .amenities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .current-images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="main-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="mb-0"><i class="fas fa-edit me-3"></i>Edit Project</h1>
+          <p class="mb-0 mt-2 opacity-75">Update your property development project details</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <i class="fas fa-building" style="font-size: 60px; opacity: 0.3;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home me-1"></i>Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Projects</a></li>
+        <li class="breadcrumb-item active">Edit Project</li>
+      </ol>
+    </nav>
+
+    <div class="form-container">
+      <form method="POST" action="<%= editAction %>" enctype="multipart/form-data">
+        
+        <!-- Current Images Section -->
+        <div class="mb-5">
+          <div class="section-title">
+            <i class="fas fa-images"></i>
+            Current Project Images
+          </div>
+          
+          <div class="current-images-grid">
+            <% if (project.imageUrls && project.imageUrls.length > 0) { %>
+              <% project.imageUrls.forEach((url, index) => { %>
+                <div class="image-card">
+                  <img src="<%= url %>" alt="Project Image <%= index + 1 %>" />
+                  <div class="image-label">Image <%= index + 1 %></div>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <div class="no-images-message">
+                <i class="fas fa-image fa-3x mb-3 text-muted"></i>
+                <p class="mb-0">No images uploaded for this project.</p>
+              </div>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- Replace Images Section -->
+        <div class="mb-5">
+          <div class="section-title">
+            <i class="fas fa-sync-alt"></i>
+            Replace Project Images
+          </div>
+          <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+            <div class="upload-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h5 class="mb-2">Upload New Project Images</h5>
+            <p class="text-muted mb-0">Click to browse or drag and drop multiple images</p>
+            <small class="text-muted">Supported formats: JPG, PNG, GIF (Max 10MB each)</small>
+          </div>
+          <input type="file" name="images" id="imageInput" multiple class="d-none" accept="image/*" />
+        </div>
+
+        <!-- Basic Information -->
+        <div class="mb-5">
+          <div class="section-title">
+            <i class="fas fa-info-circle"></i>
+            Basic Information
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8">
+              <label class="form-label">Project Title *</label>
+              <input type="text" name="title" value="<%= project.title %>" placeholder="Project Title" class="form-control mb-3" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">URL Slug</label>
+              <input type="text" name="slug" value="<%= project.slug %>" placeholder="Slug (auto-generated or customize)" class="form-control mb-3" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Project Description *</label>
+            <textarea name="description" rows="4" class="form-control" placeholder="Project Description" required><%= project.description %></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label">Project Type *</label>
+              <select name="type" class="form-select mb-3" required>
+                <option value="">Select Project Type</option>
+                <option value="residential" <%= project.type === 'residential' ? 'selected' : '' %>>🏠 Residential</option>
+                <option value="commercial" <%= project.type === 'commercial' ? 'selected' : '' %>>🏢 Commercial</option>
+                <option value="mixed" <%= project.type === 'mixed' ? 'selected' : '' %>>🏘️ Mixed Use</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Project Status</label>
+              <select name="status" class="form-select mb-3">
+                <option value="active" <%= project.status === 'active' ? 'selected' : '' %>>✅ Active</option>
+                <option value="inactive" <%= project.status === 'inactive' ? 'selected' : '' %>>⏸️ Inactive</option>
+                <option value="completed" <%= project.status === 'completed' ? 'selected' : '' %>>✨ Completed</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Information -->
+        <div class="mb-5">
+          <div class="section-title">
+            <i class="fas fa-map-marker-alt"></i>
+            Location Details
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">Complete Address *</label>
+            <input type="text" name="location" value="<%= project.location %>" placeholder="Complete Location (Street, etc)" class="form-control" required />
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <label class="form-label">State/Province *</label>
+              <select id="state" name="state" class="form-select mb-3" onchange="updateCities()" required>
+                <option value="">Select State</option>
+                <option value="Punjab" <%= project.state === 'Punjab' ? 'selected' : '' %>>Punjab</option>
+                <option value="Sindh" <%= project.state === 'Sindh' ? 'selected' : '' %>>Sindh</option>
+                <option value="KPK" <%= project.state === 'KPK' ? 'selected' : '' %>>KPK</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">City *</label>
+              <select id="city" name="city" class="form-select mb-3" required>
+                <option value="">Select City</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Area/Society *</label>
+              <input type="text" name="areaName" value="<%= project.areaName %>" placeholder="Area Name (e.g. Bahria Town)" class="form-control mb-3" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Timeline -->
+        <div class="mb-5">
+          <div class="section-title">
+            <i class="fas fa-calendar-alt"></i>
+            Project Timeline
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label">Launch Date *</label>
+              <input type="date" name="launchDate" value="<%= project.launchDate ? project.launchDate.toISOString().split('T')[0] : '' %>" class="form-control mb-3" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Expected Completion</label>
+              <input type="date" name="completionDate" value="<%= project.completionDate ? project.completionDate.toISOString().split('T')[0] : '' %>" class="form-control mb-3" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Information -->
+        <div class="mb-5">
+          <div class="section-title">
+            <i class="fas fa-dollar-sign"></i>
+            Pricing Range
+          </div>
+          
+          <div class="price-inputs">
+            <div class="input-group">
+              <span class="input-group-text">PKR</span>
+              <input type="number" name="priceMin" placeholder="Min Price" class="form-control" value="<%= project.priceRange?.min || '' %>" required />
+            </div>
+            <div class="input-group">
+              <span class="input-group-text">PKR</span>
+              <input type="number" name="priceMax" placeholder="Max Price" class="form-control" value="<%= project.priceRange?.max || '' %>" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="mb-5">
+          <div class="section-title">
+            <i class="fas fa-star"></i>
+            Project Amenities
+          </div>
+          
+          <div class="amenities-grid">
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Gated Community" id="gated-community" <%= project.amenities && project.amenities.includes('Gated Community') ? 'checked' : '' %>>
+                <label class="form-check-label" for="gated-community">
+                  <i class="fas fa-shield-alt me-2 text-success"></i>Gated Community
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="24/7 Security" id="security" <%= project.amenities && project.amenities.includes('24/7 Security') ? 'checked' : '' %>>
+                <label class="form-check-label" for="security">
+                  <i class="fas fa-user-shield me-2 text-primary"></i>24/7 Security
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Parks" id="parks" <%= project.amenities && project.amenities.includes('Parks') ? 'checked' : '' %>>
+                <label class="form-check-label" for="parks">
+                  <i class="fas fa-tree me-2 text-success"></i>Parks & Green Spaces
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Mosques" id="mosques" <%= project.amenities && project.amenities.includes('Mosques') ? 'checked' : '' %>>
+                <label class="form-check-label" for="mosques">
+                  <i class="fas fa-mosque me-2 text-info"></i>Mosques
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Schools" id="schools" <%= project.amenities && project.amenities.includes('Schools') ? 'checked' : '' %>>
+                <label class="form-check-label" for="schools">
+                  <i class="fas fa-graduation-cap me-2 text-warning"></i>Schools
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Hospitals" id="hospitals" <%= project.amenities && project.amenities.includes('Hospitals') ? 'checked' : '' %>>
+                <label class="form-check-label" for="hospitals">
+                  <i class="fas fa-hospital me-2 text-danger"></i>Medical Facilities
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Shopping Malls" id="shopping" <%= project.amenities && project.amenities.includes('Shopping Malls') ? 'checked' : '' %>>
+                <label class="form-check-label" for="shopping">
+                  <i class="fas fa-shopping-cart me-2 text-primary"></i>Shopping Centers
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Sports Complex" id="sports" <%= project.amenities && project.amenities.includes('Sports Complex') ? 'checked' : '' %>>
+                <label class="form-check-label" for="sports">
+                  <i class="fas fa-dumbbell me-2 text-success"></i>Sports Complex
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Underground Electricity" id="electricity" <%= project.amenities && project.amenities.includes('Underground Electricity') ? 'checked' : '' %>>
+                <label class="form-check-label" for="electricity">
+                  <i class="fas fa-bolt me-2 text-warning"></i>Underground Utilities
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Water Supply" id="water" <%= project.amenities && project.amenities.includes('Water Supply') ? 'checked' : '' %>>
+                <label class="form-check-label" for="water">
+                  <i class="fas fa-tint me-2 text-info"></i>24/7 Water Supply
+                </label>
+              </div>
+            </div>
+            <div class="amenity-item">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="amenities" value="Community Center" id="community" <%= project.amenities && project.amenities.includes('Community Center') ? 'checked' : '' %>>
+                <label class="form-check-label" for="community">
+                  <i class="fas fa-users me-2 text-primary"></i>Community Center
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="d-flex gap-3 pt-4 border-top">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fas fa-save me-2"></i>Update Project
+          </button>
+          <a href="<%= cancelUrl %>" class="btn btn-secondary btn-lg">
+            <i class="fas fa-times me-2"></i>Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const cityOptions = {
+      Punjab: ["Lahore", "Rawalpindi", "Multan"],
+      Sindh: ["Karachi", "Hyderabad", "Sukkur"],
+      KPK: ["Peshawar", "Abbottabad", "Swat"]
+    };
+
+    function updateCities() {
+      const state = document.getElementById('state').value;
+      const citySelect = document.getElementById('city');
+      citySelect.innerHTML = '<option value="">Select City</option>';
+      if (cityOptions[state]) {
+        cityOptions[state].forEach(city => {
+          const option = document.createElement('option');
+          option.value = city;
+          option.text = city;
+          // Simulate selected city - replace with actual EJS logic
+          if (city === "<%= project.city %>") option.selected = true;
+          citySelect.appendChild(option);
+        });
+      }
+    }
+
+    function generateSlugFromTitle(title) {
+      return title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    }
+
+    let slugManuallyEdited = false;
+
+    function updateSlug() {
+      if (slugManuallyEdited) return;
+      const title = document.querySelector('input[name="title"]').value;
+      const slug = generateSlugFromTitle(title);
+      document.querySelector('input[name="slug"]').value = slug;
+    }
+
+    window.onload = () => {
+      updateCities();
+
+      const titleInput = document.querySelector('input[name="title"]');
+      const slugInput = document.querySelector('input[name="slug"]');
+
+      titleInput.addEventListener('input', updateSlug);
+
+      slugInput.addEventListener('input', () => {
+        slugManuallyEdited = true;
+      });
+    };
+
+    // File upload preview
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+      const files = e.target.files;
+      const uploadArea = document.querySelector('.upload-area');
+      
+      if (files.length > 0) {
+        uploadArea.innerHTML = `
+          <div class="upload-icon">
+            <i class="fas fa-check-circle text-success"></i>
+          </div>
+          <h5 class="mb-2 text-success">${files.length} New Image(s) Selected</h5>
+          <p class="text-muted mb-0">These will replace current images when you save</p>
+        `;
+      }
+    });
+
+    // Form validation enhancement
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const requiredFields = document.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          field.classList.remove('is-invalid');
+        }
+      });
+      
+      if (!isValid) {
+        e.preventDefault();
+        alert('Please fill in all required fields.');
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= pageTitle || 'My Profile' %></title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background-color: #fff;
+      color: #000;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+
+    .profile-container {
+      display: flex;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+      padding: 20px;
+    }
+
+    .profile-card {
+      background-color: #ffffff;
+      border: none;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 500px;
+      padding: 0;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    .profile-header {
+      background-color: #2d5016;
+      color: white;
+      padding: 30px 40px 25px;
+      text-align: center;
+      position: relative;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .profile-avatar i {
+      font-size: 2rem;
+      color: white;
+    }
+
+    .profile-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+
+    .profile-content {
+      padding: 35px 40px;
+      background-color: #fafafa;
+    }
+
+    .profile-info {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid #e8e8e8;
+      transition: all 0.2s ease;
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-item:hover {
+      padding-left: 5px;
+    }
+
+    .info-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 8px;
+      background-color: #2d5016;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      color: white;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .info-details {
+      flex: 1;
+    }
+
+    .info-label {
+      font-size: 0.85rem;
+      color: #666;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+
+    .info-value {
+      font-size: 1.1rem;
+      color: #2d5016;
+      font-weight: 600;
+      word-break: break-all;
+    }
+
+    .info-value.capitalize {
+      text-transform: capitalize;
+      word-break: normal;
+    }
+
+    .btn-edit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #2d5016;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      font-size: 1rem;
+      width: 100%;
+      margin-top: 25px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-edit:hover {
+      background-color: #3c6820;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
+    }
+
+    .btn-edit i {
+      margin-right: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .profile-container {
+        padding: 10px;
+      }
+      
+      .profile-card {
+        max-width: 100%;
+      }
+      
+      .profile-header,
+      .profile-content {
+        padding-left: 25px;
+        padding-right: 25px;
+      }
+      
+      .profile-title {
+        font-size: 1.5rem;
+      }
+      
+      .info-item {
+        padding: 15px 0;
+      }
+      
+      .info-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <%- include('partials/header', { user: user }) %>
+
+  <!-- Main Profile Content -->
+  <div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <h1 class="profile-title">My Profile</h1>
+      </div>
+
+      <div class="profile-content">
+        <ul class="profile-info">
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="info-details">
+              <div class="info-label">Name</div>
+              <div class="info-value"><%= agent.name %></div>
+            </div>
+          </li>
+
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="info-details">
+              <div class="info-label">Email</div>
+              <div class="info-value"><%= agent.email %></div>
+            </div>
+          </li>
+
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="info-details">
+              <div class="info-label">Phone</div>
+              <div class="info-value"><%= agent.phone %></div>
+            </div>
+          </li>
+
+          <li class="info-item">
+            <div class="info-icon">
+              <i class="fas fa-briefcase"></i>
+            </div>
+            <div class="info-details">
+              <div class="info-label">Role</div>
+              <div class="info-value capitalize"><%= agent.role %></div>
+            </div>
+          </li>
+        </ul>
+
+        <a href="<%= agent.role === 'agency' ? '/agency/edit-profile' : '/agent/edit-profile' %>" class="btn-edit">
+          <i class="fas fa-edit"></i> Edit Profile
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <%- include('partials/footer') %>
+
+</body>
+</html>

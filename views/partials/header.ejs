@@ -1,0 +1,645 @@
+<!-- Header Partial - Save as views/partials/header.ejs -->
+<style>
+    /* Header-specific styles - Add this to your main CSS or in a <style> tag */
+    .auth-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem; /* Reduced gap */
+    }
+
+    .navbar {
+        background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+        padding: 0;
+        margin-bottom: 1px;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(45, 80, 22, 0.15);
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .nav-container {
+        max-width:100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 1.5rem; /* Reduced padding */
+        position: relative;
+    }
+
+    .logo {
+        color: white;
+        font-size: 1.6rem; /* Slightly reduced */
+        font-weight: 700;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem; /* Reduced gap */
+        transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+        transform: scale(1.05);
+    }
+
+    .logo i {
+        font-size: 1.7rem; /* Reduced icon size */
+        color: #4CAF50;
+    }
+
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 1.5rem; /* Reduced gap */
+        align-items: center;
+    }
+
+    .nav-menu li {
+        position: relative;
+    }
+
+    .nav-menu a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem; /* Reduced font size */
+        padding: 0.4rem 0.8rem; /* Reduced padding */
+        border-radius: 20px; /* Slightly smaller border radius */
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .nav-menu a i {
+        font-size: 0.8rem; /* Smaller icons in nav */
+        margin-right: 0.3rem;
+    }
+
+    .nav-menu a:hover {
+        color: #4CAF50;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .user-info {
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem; /* Reduced gap */
+        font-weight: 500;
+    }
+
+    .welcome-text {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem; /* Reduced gap */
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0.4rem 0.8rem; /* Reduced padding */
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        white-space: nowrap;
+        font-size: 0.85rem; /* Smaller font */
+        max-width: 150px; /* Limit width */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .welcome-text i {
+        font-size: 0.75rem; /* Smaller icon */
+        flex-shrink: 0;
+    }
+
+    /* Compact button styles */
+    .logout-btn, .auth-btn {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        padding: 0.4rem 0.7rem; /* Much smaller padding */
+        border: none;
+        border-radius: 18px; /* Smaller border radius */
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.75rem; /* Smaller font */
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(76, 175, 80, 0.25);
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem; /* Smaller gap */
+        min-width: auto;
+    }
+
+    .logout-btn i, .auth-btn i {
+        font-size: 0.7rem; /* Much smaller icons */
+        flex-shrink: 0;
+    }
+
+    /* Hide text on very small screens, show only icons */
+    @media (max-width: 1200px) {
+        .logout-btn span, .auth-btn span {
+            display: none;
+        }
+        
+        .logout-btn, .auth-btn {
+            min-width: 32px;
+            padding: 0.4rem;
+            justify-content: center;
+        }
+    }
+
+    .logout-btn::before, .auth-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .logout-btn:hover::before, .auth-btn:hover::before {
+        left: 100%;
+    }
+
+    .logout-btn:hover, .auth-btn:hover {
+        background: linear-gradient(135deg, #45a049, #3d8b40);
+        transform: translateY(-2px);
+        box-shadow: 0 3px 12px rgba(76, 175, 80, 0.35);
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.3rem; /* Reduced size */
+        cursor: pointer;
+        padding: 0.4rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        position: relative;
+        width: 40px; /* Smaller */
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile-menu-toggle:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: scale(1.1);
+    }
+
+    .hamburger {
+        width: 22px; /* Smaller */
+        height: 18px;
+        position: relative;
+        transform: rotate(0deg);
+        transition: 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        position: absolute;
+        height: 2.5px; /* Thinner lines */
+        width: 100%;
+        background: white;
+        border-radius: 3px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: 0.25s ease-in-out;
+    }
+
+    .hamburger span:nth-child(1) {
+        top: 0px;
+    }
+
+    .hamburger span:nth-child(2),
+    .hamburger span:nth-child(3) {
+        top: 7px;
+    }
+
+    .hamburger span:nth-child(4) {
+        top: 14px;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        top: 7px;
+        width: 0%;
+        left: 50%;
+    }
+
+    .hamburger.active span:nth-child(2) {
+        transform: rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+
+    .hamburger.active span:nth-child(4) {
+        top: 7px;
+        width: 0%;
+        left: 50%;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 1024px) {
+        .nav-container {
+            padding: 0.8rem 1rem;
+        }
+        
+        .nav-menu {
+            gap: 1rem;
+        }
+        
+        .auth-container {
+            gap: 0.3rem;
+        }
+        
+        .welcome-text {
+            max-width: 120px;
+            font-size: 0.8rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .nav-container {
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+        }
+
+        .logo i {
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 350px;
+            height: 100vh;
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+            transition: right 0.4s ease;
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            justify-content: flex-start;
+            gap: 0;
+            overflow-y: auto;
+        }
+
+        .nav-menu.active {
+            display: flex;
+            right: 0;
+        }
+
+        .nav-menu li {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-menu a {
+            display: block;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a i {
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4CAF50;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+        }
+
+        .mobile-menu-toggle {
+            display: flex;
+            z-index: 1001;
+        }
+
+        .user-info {
+            display: none;
+            position: fixed;
+            top: 350px;
+            right: -100%;
+            width: 100%;
+            max-width: 350px;
+            background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+            flex-direction: column;
+            padding: 1.5rem;
+            gap: 1rem;
+            transition: right 0.4s ease;
+            box-shadow: -5px 5px 20px rgba(0, 0, 0, 0.3);
+            border-radius: 0 0 0 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .user-info.active {
+            display: flex;
+            right: 0;
+        }
+
+        .user-info .welcome-text {
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1rem;
+            max-width: none;
+        }
+
+        .user-info .logout-btn, .user-info .auth-btn {
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            justify-content: center;
+        }
+
+        .user-info .logout-btn span, .user-info .auth-btn span {
+            display: inline; /* Show text in mobile menu */
+        }
+
+        .user-info .logout-btn i, .user-info .auth-btn i {
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .desktop-auth {
+            display: none;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .mobile-auth {
+            display: none;
+        }
+    }
+
+    @keyframes slideInRight {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .nav-container {
+            padding: 1rem;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+        }
+
+        .nav-menu {
+            max-width: 100%;
+            padding: 1.5rem 1rem;
+        }
+
+        .user-info {
+            max-width: 100%;
+            padding: 1rem;
+        }
+    }
+</style>
+
+<div class="mobile-overlay" onclick="closeMobileMenu()"></div>
+
+<header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <i class="fas fa-home"></i> PropertyHub
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/properties"><i class="fas fa-building"></i> Properties</a></li>
+                <li><a href="/projects"><i class="fas fa-building"></i> Projects</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+
+            <!-- Desktop Authentication -->
+            <div class="auth-container desktop-auth">
+                <% if (user) { %>
+                    <span class="welcome-text">
+                        <i class="fas fa-user"></i> <%= user.name %>
+                    </span>
+                    
+                    <% if (user.role === 'admin') { %>
+                        <a href="/admin/dashboard" class="logout-btn" title="Dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="/admin/agents" class="logout-btn" title="Manage Users">
+                            <i class="fas fa-users"></i>
+                            <span>Manage</span>
+                        </a>
+                    <% } else if (user.role === 'agent') { %>
+                        <a href="/agent/dashboard" class="logout-btn" title="Agent Dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="/agent/my-profile" class="logout-btn" title="My Profile">
+                            <i class="fas fa-user"></i>
+                            <span>My Profile</span>
+                        </a>
+                    <% } else if (user.role === 'agency') { %>
+                        <a href="/agency/dashboard" class="logout-btn" title="Dashboard">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="/agency/my-profile" class="logout-btn" title="My Profile">
+                            <i class="fas fa-building"></i>
+                            <span>Profile</span>
+                        </a>
+                    <% } %>
+                    
+                    <a href="/logout" class="logout-btn" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                <% } else { %>
+                    <a href="/login" class="auth-btn" title="Login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                    <a href="/register" class="auth-btn" title="Register">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Register</span>
+                    </a>
+                <% } %>
+            </div>
+
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" id="mobileToggle">
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+        
+        <!-- Mobile Authentication -->
+        <div class="mobile-auth user-info" id="userInfo">
+            <% if (user) { %>
+                <span class="welcome-text">
+                    <i class="fas fa-user"></i> Welcome, <%= user.name %>
+                </span>
+                
+                <% if (user.role === 'admin') { %>
+                    <a href="/admin/dashboard" class="logout-btn">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="/admin/users" class="logout-btn">
+                        <i class="fas fa-users"></i>
+                        <span>Manage Users</span>
+                    </a>
+                <% } else if (user.role === 'agent') { %>
+                    <a href="/agent/dashboard" class="logout-btn">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Agent Dashboard</span>
+                    </a>
+                    <a href="/agent/my-profile" class="logout-btn">
+                        <i class="fas fa-user"></i>
+                        <span>My Profile</span>
+                    </a>
+                <% } else if (user.role === 'agency') { %>
+                    <a href="/agency/dashboard" class="logout-btn">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Agency Dashboard</span>
+                    </a>
+                    <a href="/agency/my-profile" class="logout-btn">
+                        <i class="fas fa-building"></i>
+                        <span>Agency Profile</span>
+                    </a>
+                <% } %>
+                
+                <a href="/logout" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            <% } else { %>
+                <a href="/login" class="auth-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Login</span>
+                </a>
+                <a href="/register" class="auth-btn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Register</span>
+                </a>
+            <% } %>
+        </div>
+    </nav>
+</header>
+
+<script>
+    let mobileMenuOpen = false;
+
+    function toggleMobileMenu() {
+        const navMenu = document.getElementById('navMenu');
+        const userInfo = document.getElementById('userInfo');
+        const hamburger = document.getElementById('hamburger');
+        const overlay = document.querySelector('.mobile-overlay');
+        
+        mobileMenuOpen = !mobileMenuOpen;
+        
+        if (mobileMenuOpen) {
+            navMenu.classList.add('active');
+            userInfo.classList.add('active');
+            hamburger.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        } else {
+            navMenu.classList.remove('active');
+            userInfo.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function closeMobileMenu() {
+        if (mobileMenuOpen) {
+            toggleMobileMenu();
+        }
+    }
+
+    document.querySelectorAll('.nav-menu a, .user-info a').forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+    });
+
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+        
+        if (window.scrollY > 100) {
+            navbar.style.background = 'linear-gradient(135deg, rgba(45, 80, 22, 0.95) 0%, rgba(26, 48, 9, 0.95) 100%)';
+            navbar.style.backdropFilter = 'blur(20px)';
+            navbar.style.boxShadow = '0 8px 30px rgba(45, 80, 22, 0.3)';
+        } else {
+            navbar.style.background = 'linear-gradient(135deg, #2d5016 0%, #1a3009 100%)';
+            navbar.style.backdropFilter = 'none';
+            navbar.style.boxShadow = '0 4px 20px rgba(45, 80, 22, 0.15)';
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && mobileMenuOpen) {
+            closeMobileMenu();
+        }
+    });
+
+    window.addEventListener('touchmove', (e) => {
+        if (mobileMenuOpen && !e.target.closest('.nav-menu, .user-info')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+</script>

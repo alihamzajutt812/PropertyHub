@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= project.title %> | Real Estate Projects</title>
+  <style>
+    * { 
+      box-sizing: border-box; 
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-color: #f8f9fa;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .project-layout {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    /* Main Content Column */
+    .main-content {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    /* Carousel Styles */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      height: 450px;
+      background: #f5f5f5;
+    }
+
+    .carousel-images {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      height: 100%;
+    }
+
+    .carousel-images img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      z-index: 10;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .carousel-btn.left { left: 15px; }
+    .carousel-btn.right { right: 15px; }
+
+    /* Project Info Section */
+    .project-info {
+      padding: 25px;
+    }
+
+    .project-header {
+      border-bottom: 1px solid #e9ecef;
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+    }
+
+    .project-title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .project-location {
+      color: #6c757d;
+      font-size: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+
+    .project-location::before {
+      content: "📍";
+      margin-right: 8px;
+    }
+
+    .project-status {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: bold;
+      background: #28a745;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 15px;
+    }
+
+    .project-type {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: bold;
+      background: #007bff;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .project-price {
+      font-size: 24px;
+      font-weight: bold;
+      color: #27ae60;
+      margin: 15px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .price-range {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price-currency {
+      font-size: 16px;
+    }
+
+    .price-separator {
+      font-size: 18px;
+      color: #6c757d;
+    }
+
+    /* Project Details Grid */
+    .details-section {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #27ae60;
+      display: inline-block;
+    }
+
+    .project-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .detail-box {
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      padding: 20px 15px;
+      text-align: center;
+      transition: box-shadow 0.3s;
+    }
+
+    .detail-box:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .detail-label {
+      color: #6c757d;
+      font-size: 13px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+
+    .detail-value {
+      color: #2c3e50;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* Amenities Grid */
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .amenity-item {
+      background: #e8f5e8;
+      border: 1px solid #c3e6c3;
+      border-radius: 6px;
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      color: #155724;
+      font-weight: 500;
+    }
+
+    .amenity-item::before {
+      content: "✓";
+      color: #28a745;
+      font-weight: bold;
+      margin-right: 10px;
+      font-size: 14px;
+    }
+
+    /* Description Section */
+    .description-section {
+      background: #f8f9fa;
+      padding: 25px;
+      border-top: 1px solid #e9ecef;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .description-text {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.8;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+      margin-top: 15px;
+    }
+
+    /* Contact Sidebar */
+    .contact-sidebar {
+      position: sticky;
+      top: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+      padding: 25px;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .contact-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .agent-info {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .agent-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #27ae60, #2ecc71);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-size: 32px;
+      color: white;
+      font-weight: bold;
+      overflow: hidden;
+    }
+
+    .agent-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .agency-info {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .agency-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .agency-address {
+      font-size: 13px;
+      color: #6c757d;
+      margin-bottom: 10px;
+    }
+
+    .agent-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .agent-role {
+      color: #6c757d;
+      font-size: 14px;
+      text-transform: capitalize;
+    }
+
+    .contact-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-button {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      font-family: 'Tahoma', sans-serif;
+    }
+
+    .contact-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .contact-button::before {
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .whatsapp-btn { 
+      background: #25D366; 
+    }
+    .whatsapp-btn:hover { 
+      background: #1ebe57; 
+    }
+    .whatsapp-btn::before { 
+      content: "💬"; 
+    }
+
+    .phone-btn { 
+      background: #007bff; 
+    }
+    .phone-btn:hover { 
+      background: #0056b3; 
+    }
+    .phone-btn::before { 
+      content: "📞"; 
+    }
+
+    .email-btn { 
+      background: #6c757d; 
+    }
+    .email-btn:hover { 
+      background: #5a6268; 
+    }
+    .email-btn::before { 
+      content: "✉️"; 
+    }
+
+    .inquiry-btn {
+      background: #28a745;
+    }
+    .inquiry-btn:hover {
+      background: #1e7e34;
+    }
+    .inquiry-btn::before {
+      content: "📋";
+    }
+
+    .contact-note {
+      background: #e8f5e8;
+      border: 1px solid #c3e6c3;
+      border-radius: 6px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #155724;
+      text-align: center;
+    }
+
+    .no-agent-info {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      border-radius: 6px;
+      padding: 20px;
+      color: #721c24;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .date-badge {
+      display: inline-block;
+      background: #17a2b8;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .project-layout {
+        grid-template-columns: 1fr 320px;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      .project-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .contact-sidebar {
+        position: static;
+        order: -1;
+      }
+
+      .carousel {
+        height: 300px;
+      }
+
+      .project-title {
+        font-size: 24px;
+      }
+
+      .project-price {
+        font-size: 20px;
+      }
+
+      .project-details {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .detail-box {
+        padding: 15px 10px;
+      }
+
+      .carousel-btn {
+        padding: 10px 12px;
+        font-size: 16px;
+      }
+
+      .amenities-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .project-details {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-buttons {
+        gap: 10px;
+      }
+
+      .contact-button {
+        padding: 12px 16px;
+        font-size: 13px;
+      }
+
+      .price-range {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header', { user: user }) %>
+
+<div class="container">
+  <div class="project-layout">
+    
+    <!-- Main Content Column -->
+    <div class="main-content">
+      
+      <!-- Image Carousel -->
+      <div class="carousel">
+        <button class="carousel-btn left" onclick="moveSlide(-1)">&#10094;</button>
+        <div class="carousel-images" id="carouselImages">
+          <% if (Array.isArray(project.imageUrls) && project.imageUrls.length > 0) { %>
+            <% project.imageUrls.forEach(url => { %>
+              <img src="<%= url %>" alt="Project Image">
+            <% }) %>
+          <% } else { %>
+            <img src="/images/placeholder-project.jpg" alt="No Image Available">
+          <% } %>
+        </div>
+        <button class="carousel-btn right" onclick="moveSlide(1)">&#10095;</button>
+      </div>
+
+      <!-- Project Information -->
+      <div class="project-info">
+        
+        <!-- Project Header -->
+        <div class="project-header">
+          <h1 class="project-title"><%= project.title %></h1>
+          <p class="project-location">
+            <% 
+              let locationParts = [];
+              if (project.location) {
+                locationParts = project.location.split(', ');
+              } else {
+                locationParts = [project.areaName, project.city, project.state].filter(Boolean);
+              }
+              let displayLocation = locationParts.join(', ');
+            %>
+            <%= displayLocation %>
+          </p>
+          <div style="margin: 12px 0;">
+            <span class="project-status"><%= project.status %></span>
+            <span class="project-type"><%= project.type %></span>
+          </div>
+          
+          <% if (project.priceMin && project.priceMax) { %>
+            <div class="project-price">
+              <div class="price-range">
+                <span><span class="price-currency">PKR</span> <%= project.priceMin.toLocaleString() %></span>
+                <span class="price-separator">-</span>
+                <span><span class="price-currency">PKR</span> <%= project.priceMax.toLocaleString() %></span>
+              </div>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Project Details -->
+        <div class="details-section">
+          <h3 class="section-title">Project Details</h3>
+          <div class="project-details">
+            <div class="detail-box">
+              <div class="detail-label">Project Type</div>
+              <div class="detail-value"><%= project.type %></div>
+            </div>
+            
+            <div class="detail-box">
+              <div class="detail-label">Status</div>
+              <div class="detail-value"><%= project.status %></div>
+            </div>
+
+            <% if (project.launchDate) { %>
+              <div class="detail-box">
+                <div class="detail-label">Launch Date</div>
+                <div class="detail-value">
+                  <span class="date-badge">
+                    <%= new Date(project.launchDate).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'short', 
+                      day: 'numeric' 
+                    }) %>
+                  </span>
+                </div>
+              </div>
+            <% } %>
+
+            <% if (project.completionDate) { %>
+              <div class="detail-box">
+                <div class="detail-label">Completion Date</div>
+                <div class="detail-value">
+                  <span class="date-badge">
+                    <%= new Date(project.completionDate).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'short', 
+                      day: 'numeric' 
+                    }) %>
+                  </span>
+                </div>
+              </div>
+            <% } %>
+
+            <% if (project.state) { %>
+              <div class="detail-box">
+                <div class="detail-label">State</div>
+                <div class="detail-value"><%= project.state %></div>
+              </div>
+            <% } %>
+
+            <% if (project.city) { %>
+              <div class="detail-box">
+                <div class="detail-label">City</div>
+                <div class="detail-value"><%= project.city %></div>
+              </div>
+            <% } %>
+
+            <% if (project.areaName) { %>
+              <div class="detail-box">
+                <div class="detail-label">Area</div>
+                <div class="detail-value"><%= project.areaName %></div>
+              </div>
+            <% } %>
+
+          </div>
+        </div>
+
+        <!-- Amenities Section -->
+        <% if (Array.isArray(project.amenities) && project.amenities.length > 0) { %>
+          <div class="details-section">
+            <h3 class="section-title">Amenities & Features</h3>
+            <div class="amenities-grid">
+              <% project.amenities.forEach(amenity => { %>
+                <div class="amenity-item"><%= amenity %></div>
+              <% }); %>
+            </div>
+          </div>
+        <% } %>
+
+        <!-- Description -->
+        <% if (project.description) { %>
+          <div class="details-section">
+            <h3 class="section-title">Project Description</h3>
+            <p class="description-text"><%= project.description %></p>
+          </div>
+        <% } %>
+
+      </div>
+
+    </div>
+
+    <!-- Contact Sidebar -->
+<div class="contact-sidebar">
+  <% 
+    // Determine contact info: use project.agency or admin fallback
+    let contactInfo;
+    if (project.agency) {
+      contactInfo = project.agency;
+    } else {
+      contactInfo = {
+        name: 'Ali Hamza',
+        email: 'alihamzajutt812@gmail.com',
+        phone: '03404103311',
+        role: 'admin'
+      };
+    }
+  %>
+
+  <div class="contact-header">
+    <h3 class="contact-title">Get Project Information</h3>
+  </div>
+
+  <div class="agent-info">
+    <div class="agent-avatar">
+      <% if (contactInfo.role === 'agency' && contactInfo.agencyLogo) { %>
+        <img src="<%= contactInfo.agencyLogo %>" alt="<%= contactInfo.agencyName || contactInfo.name %>">
+      <% } else { %>
+        <%= contactInfo.name.charAt(0).toUpperCase() %>
+      <% } %>
+    </div>
+    <div class="agent-name"><%= contactInfo.name %></div>
+    <div class="agent-role">
+      <% if (contactInfo.role === 'admin') { %>
+        Project Manager
+      <% } else if (contactInfo.role === 'agency') { %>
+        Real Estate Agency
+      <% } else { %>
+        Sales Agent
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Agency Info (if applicable) -->
+  <% if (contactInfo.role === 'agency' && (contactInfo.agencyName || contactInfo.agencyAddress)) { %>
+    <div class="agency-info">
+      <% if (contactInfo.agencyName) { %>
+        <div class="agency-name"><%= contactInfo.agencyName %></div>
+      <% } %>
+      <% if (contactInfo.agencyAddress) { %>
+        <div class="agency-address"><%= contactInfo.agencyAddress %></div>
+      <% } %>
+    </div>
+  <% } %>
+
+  <div class="contact-buttons">
+    <% if (contactInfo.phone) { %>
+      <a href="https://wa.me/<%= contactInfo.phone.replace(/[^0-9]/g, '') %>?text=Hi, I'm interested in the project '<%= project.title %>'. Can you provide more details?" 
+         class="contact-button whatsapp-btn" target="_blank">
+        Chat on WhatsApp
+      </a>
+
+      <a href="tel:<%= contactInfo.phone %>" class="contact-button phone-btn">
+        Call Now
+      </a>
+    <% } %>
+
+    <% if (contactInfo.email) { %>
+      <a href="mailto:<%= contactInfo.email %>?subject=Inquiry about <%= project.title %>&body=Hi, I'm interested in learning more about the project '<%= project.title %>'. Please provide more details." 
+         class="contact-button email-btn">
+        Send Email
+      </a>
+    <% } %>
+  </div>
+
+  <div class="contact-note">
+    💡 Contact us for detailed brochures, payment plans, and site visits
+  </div>
+</div>
+
+</div>
+</div>
+
+<%- include('partials/footer') %>
+
+  <script>
+    let currentSlide = 0;
+    const images = document.querySelectorAll("#carouselImages img");
+
+    function moveSlide(n) {
+      const totalSlides = images.length;
+      if (totalSlides === 0) return;
+      
+      currentSlide = (currentSlide + n + totalSlides) % totalSlides;
+      const offset = -currentSlide * 100;
+      document.getElementById("carouselImages").style.transform = `translateX(${offset}%)`;
+    }
+
+
+    // Auto-slide functionality (optional)
+    // setInterval(() => moveSlide(1), 8000);
+
+    // Initialize carousel if images exist
+    if (images.length > 0) {
+      document.getElementById("carouselImages").style.transform = `translateX(0%)`;
+    }
+  </script>
+</body>
+</html>

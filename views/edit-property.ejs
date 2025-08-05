@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= pageTitle %></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Tahoma', Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    .main-header {
+      background: linear-gradient(135deg, #1F380C 0%, #2d5016 100%);
+      color: white;
+      padding: 20px 0;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .form-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 40px;
+      margin-bottom: 30px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-title {
+      color: #1F380C;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #1F380C;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-control, .form-select {
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 12px 15px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #1F380C;
+      box-shadow: 0 0 0 0.2rem rgba(31, 56, 12, 0.15);
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #1F380C 0%, #2d5016 100%);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-success:hover {
+      background: linear-gradient(135deg, #2d5016 0%, #1F380C 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(31, 56, 12, 0.3);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .amenity-item {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .amenity-item:hover {
+      border-color: #1F380C;
+      background: #f0f7eb;
+    }
+
+    .amenity-item input[type="checkbox"]:checked + label {
+      color: #1F380C;
+      font-weight: 600;
+    }
+
+    .form-check-input:checked {
+      background-color: #1F380C;
+      border-color: #1F380C;
+    }
+
+    .upload-area {
+      border: 2px dashed #1F380C;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      background: #f0f7eb;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .upload-area:hover {
+      background: #e8f5e0;
+      border-color: #2d5016;
+    }
+
+    .upload-icon {
+      font-size: 48px;
+      color: #1F380C;
+      margin-bottom: 15px;
+    }
+
+    .breadcrumb {
+      background: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb-item a {
+      color: #1F380C;
+      text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+      color: #666;
+    }
+
+    .input-group-text {
+      background: #1F380C;
+      color: white;
+      border: none;
+      font-weight: 600;
+    }
+
+    .current-images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .image-card {
+      background: white;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .image-card:hover {
+      border-color: #1F380C;
+      box-shadow: 0 4px 15px rgba(31, 56, 12, 0.1);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .image-label {
+      font-size: 12px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .no-images-message {
+      text-align: center;
+      padding: 40px;
+      background: #f8f9fa;
+      border: 2px dashed #dee2e6;
+      border-radius: 10px;
+      color: #6c757d;
+    }
+
+    .property-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .feature-input {
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-input:hover {
+      border-color: #1F380C;
+      background: #f0f7eb;
+    }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .coordinates-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 20px;
+        margin: 15px;
+      }
+      
+      .amenities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .current-images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+
+      .property-features {
+        grid-template-columns: 1fr;
+      }
+
+      .location-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .coordinates-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-section {
+      margin-bottom: 40px;
+    }
+
+    .amenity-category {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .category-title {
+      color: #1F380C;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price-display {
+      position: relative;
+    }
+
+    .price-display::before {
+      content: "PKR";
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #1F380C;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px 0 0 6px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .price-display input {
+      padding-left: 70px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="main-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <h1 class="mb-0"><i class="fas fa-edit me-3"></i>Edit Property</h1>
+          <p class="mb-0 mt-2 opacity-75">Update your property listing details</p>
+        </div>
+        <div class="col-md-4 text-end">
+          <i class="fas fa-home" style="font-size: 60px; opacity: 0.3;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home me-1"></i>Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="#">Properties</a></li>
+        <li class="breadcrumb-item active">Edit Property</li>
+      </ol>
+    </nav>
+
+    <div class="form-container">
+      <form method="POST" action="<%= editAction %>" enctype="multipart/form-data">
+        
+        <!-- Current Images Section -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-images"></i>
+            Current Property Images
+          </div>
+          
+          <% if (property.imageUrls && property.imageUrls.length > 0) { %>
+            <div class="current-images-grid">
+              <% property.imageUrls.forEach((url, index) => { %>
+                <div class="image-card">
+                  <img src="<%= url %>" alt="Property Image <%= index + 1 %>" />
+                  <div class="image-label">Image <%= index + 1 %></div>
+                </div>
+              <% }); %>
+            </div>
+          <% } else { %>
+            <div class="no-images-message">
+              <i class="fas fa-image fa-3x mb-3 text-muted"></i>
+              <p class="mb-0">No images uploaded for this property.</p>
+            </div>
+          <% } %>
+        </div>
+
+        <!-- Replace Images Section -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-sync-alt"></i>
+            Replace Property Images
+          </div>
+          <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+            <div class="upload-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h5 class="mb-2">Upload New Property Images</h5>
+            <p class="text-muted mb-0">Click to browse or drag and drop multiple images</p>
+            <small class="text-muted">Supported formats: JPG, PNG, GIF (Max 10MB each)</small>
+          </div>
+          <input type="file" name="images" id="imageInput" multiple class="d-none" accept="image/*" />
+        </div>
+
+        <!-- Basic Information -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-info-circle"></i>
+            Basic Information
+          </div>
+          
+          <div class="row">
+            <div class="col-md-8">
+              <label class="form-label">Property Title *</label>
+              <input type="text" name="title" value="<%= property.title %>" placeholder="Property Title" class="form-control mb-3" required />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">URL Slug *</label>
+              <input type="text" name="slug" value="<%= property.slug || '' %>" placeholder="Slug (auto-generated or customize)" class="form-control mb-3" required />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Property Description</label>
+            <textarea name="description" rows="4" class="form-control" placeholder="Describe your property..."><%= property.description %></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <label class="form-label">Property Type *</label>
+              <select name="type" class="form-select mb-3" required>
+                <option value="">Select Property Type</option>
+                <option value="house" <%= property.type === 'house' ? 'selected' : '' %>>🏠 House</option>
+                <option value="apartment" <%= property.type === 'apartment' ? 'selected' : '' %>>🏢 Apartment</option>
+                <option value="plot" <%= property.type === 'plot' ? 'selected' : '' %>>📐 Plot</option>
+                <option value="commercial" <%= property.type === 'commercial' ? 'selected' : '' %>>🏬 Commercial</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Purpose *</label>
+              <select name="propertyPurpose" class="form-select mb-3" required>
+                <option value="">Select Purpose</option>
+                <option value="sale" <%= property.propertyPurpose === 'sale' ? 'selected' : '' %>>💰 For Sale</option>
+                <option value="rent" <%= property.propertyPurpose === 'rent' ? 'selected' : '' %>>🏠 For Rent</option>
+                <option value="lease" <%= property.propertyPurpose === 'lease' ? 'selected' : '' %>>📝 For Lease</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Status</label>
+              <select name="status" class="form-select mb-3">
+                <option value="active" <%= property.status === 'active' ? 'selected' : '' %>>✅ Active</option>
+                <option value="sold" <%= property.status === 'sold' ? 'selected' : '' %>>💸 Sold</option>
+                <option value="pending" <%= property.status === 'pending' ? 'selected' : '' %>>⏳ Pending</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Information -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-map-marker-alt"></i>
+            Location Details
+          </div>
+          
+          <div class="location-grid">
+            <div>
+              <label class="form-label">State/Province *</label>
+              <select name="state" class="form-select mb-3" required>
+                <option value="">Select State</option>
+                <option value="Punjab" <%= property.state === 'Punjab' ? 'selected' : '' %>>Punjab</option>
+                <option value="Sindh" <%= property.state === 'Sindh' ? 'selected' : '' %>>Sindh</option>
+                <option value="KPK" <%= property.state === 'KPK' ? 'selected' : '' %>>KPK</option>
+                <option value="Balochistan" <%= property.state === 'Balochistan' ? 'selected' : '' %>>Balochistan</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">City *</label>
+              <input type="text" name="city" value="<%= property.city %>" placeholder="City Name" class="form-control mb-3" required />
+            </div>
+            <div>
+              <label class="form-label">Area/Society *</label>
+              <input type="text" name="areaName" value="<%= property.areaName %>" placeholder="Area Name (e.g. Bahria Town)" class="form-control mb-3" required />
+            </div>
+          </div>
+
+          <div class="coordinates-grid">
+            <div>
+              <label class="form-label">Latitude</label>
+              <input type="text" name="latitude" value="<%= property.latitude %>" placeholder="e.g. 31.5204" class="form-control mb-3" />
+            </div>
+            <div>
+              <label class="form-label">Longitude</label>
+              <input type="text" name="longitude" value="<%= property.longitude %>" placeholder="e.g. 74.3587" class="form-control mb-3" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Property Features -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-home"></i>
+            Property Features
+          </div>
+          
+          <div class="property-features">
+            <div class="feature-input">
+              <label class="form-label">💰 Price *</label>
+              <div class="price-display">
+                <input type="number" name="price" value="<%= property.price %>" placeholder="Enter price" class="form-control" required />
+              </div>
+            </div>
+            <div class="feature-input">
+              <label class="form-label">🛏️ Bedrooms</label>
+              <input type="number" name="bedrooms" value="<%= property.bedrooms %>" placeholder="Number of bedrooms" class="form-control" />
+            </div>
+            <div class="feature-input">
+              <label class="form-label">🚿 Bathrooms</label>
+              <input type="number" name="bathrooms" value="<%= property.bathrooms %>" placeholder="Number of bathrooms" class="form-control" />
+            </div>
+            <div class="feature-input">
+              <label class="form-label">📐 Area (sq ft)</label>
+              <input type="number" name="area" value="<%= property.area %>" placeholder="Area in square feet" class="form-control" />
+            </div>
+            <div class="feature-input">
+              <label class="form-label">📏 Plot Size</label>
+              <select name="localArea" class="form-select">
+                <option value="">Select Plot Size</option>
+                <% const plotSizes = ["3 Marla", "5 Marla", "7 Marla", "10 Marla", "1 Kanal", "2 Kanal", "4 Kanal", "8 Kanal", "10 Kanal"]; %>
+                <% plotSizes.forEach(size => { %>
+                  <option value="<%= size %>" <%= property.localArea === size ? 'selected' : '' %>><%= size %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="form-section">
+          <div class="section-title">
+            <i class="fas fa-star"></i>
+            Property Amenities
+          </div>
+
+          <!-- Basic Features -->
+          <div class="amenity-category">
+            <div class="category-title">
+              <i class="fas fa-home text-primary"></i>
+              Basic Features
+            </div>
+            <div class="amenities-grid">
+              <% 
+                const basicFeatures = ["Newly Built", "Parking Spaces", "Double Glazed Windows", "Central Air Conditioning", "Central Heating", "Electricity Backup", "Waste Disposal", "Tiled Flooring"];
+                const selected = property.amenities || [];
+              %>
+              <% basicFeatures.forEach(feature => { %>
+                <div class="amenity-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="amenities" value="<%= feature %>" id="<%= feature.replace(/\s+/g, '-') %>" <%= selected.includes(feature) ? 'checked' : '' %> />
+                    <label class="form-check-label" for="<%= feature.replace(/\s+/g, '-') %>">
+                      <i class="fas fa-check-circle me-2 text-success"></i><%= feature %>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- Rooms -->
+          <div class="amenity-category">
+            <div class="category-title">
+              <i class="fas fa-door-open text-info"></i>
+              Rooms & Spaces
+            </div>
+            <div class="amenities-grid">
+              <% 
+                const rooms = ["Servant Quarters", "Drawing Room", "Dining Room", "Kitchens", "Study Room", "Prayer Room", "Powder Room", "Store Room", "Steam Room", "Lounge or Sitting Room", "Laundry Room"];
+              %>
+              <% rooms.forEach(feature => { %>
+                <div class="amenity-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="amenities" value="<%= feature %>" id="<%= feature.replace(/\s+/g, '-') %>" <%= selected.includes(feature) ? 'checked' : '' %> />
+                    <label class="form-check-label" for="<%= feature.replace(/\s+/g, '-') %>">
+                      <i class="fas fa-door-open me-2 text-info"></i><%= feature %>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- Technology -->
+          <div class="amenity-category">
+            <div class="category-title">
+              <i class="fas fa-wifi text-warning"></i>
+              Technology & Connectivity
+            </div>
+            <div class="amenities-grid">
+              <% 
+                const technology = ["Broadband Internet", "Cable TV Ready", "Intercom"];
+              %>
+              <% technology.forEach(feature => { %>
+                <div class="amenity-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="amenities" value="<%= feature %>" id="<%= feature.replace(/\s+/g, '-') %>" <%= selected.includes(feature) ? 'checked' : '' %> />
+                    <label class="form-check-label" for="<%= feature.replace(/\s+/g, '-') %>">
+                      <i class="fas fa-wifi me-2 text-warning"></i><%= feature %>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- Community Features -->
+          <div class="amenity-category">
+            <div class="category-title">
+              <i class="fas fa-users text-success"></i>
+              Community Features
+            </div>
+            <div class="amenities-grid">
+              <% 
+                const community = ["Community Garden", "Community Swimming Pool", "Community Gym", "Medical Centre", "Day Care Centre", "Kids Play Area", "Barbecue Area", "Mosque", "Community Centre"];
+              %>
+              <% community.forEach(feature => { %>
+                <div class="amenity-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="amenities" value="<%= feature %>" id="<%= feature.replace(/\s+/g, '-') %>" <%= selected.includes(feature) ? 'checked' : '' %> />
+                    <label class="form-check-label" for="<%= feature.replace(/\s+/g, '-') %>">
+                      <i class="fas fa-users me-2 text-success"></i><%= feature %>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- Private Features -->
+          <div class="amenity-category">
+            <div class="category-title">
+              <i class="fas fa-crown text-warning"></i>
+              Private Features
+            </div>
+            <div class="amenities-grid">
+              <% 
+                const privateFeatures = ["Private Lawn", "Private Swimming Pool", "Sauna", "Jacuzzi"];
+              %>
+              <% privateFeatures.forEach(feature => { %>
+                <div class="amenity-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="amenities" value="<%= feature %>" id="<%= feature.replace(/\s+/g, '-') %>" <%= selected.includes(feature) ? 'checked' : '' %> />
+                    <label class="form-check-label" for="<%= feature.replace(/\s+/g, '-') %>">
+                      <i class="fas fa-crown me-2 text-warning"></i><%= feature %>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- Nearby Locations -->
+          <div class="amenity-category">
+            <div class="category-title">
+              <i class="fas fa-map-marker-alt text-danger"></i>
+              Nearby Locations
+            </div>
+            <div class="amenities-grid">
+              <% 
+                const nearby = ["Nearby Schools", "Nearby Hospitals", "Nearby Shopping Malls", "Nearby Restaurants", "Nearby Public Transport", "Near Airport"];
+              %>
+              <% nearby.forEach(feature => { %>
+                <div class="amenity-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="amenities" value="<%= feature %>" id="<%= feature.replace(/\s+/g, '-') %>" <%= selected.includes(feature) ? 'checked' : '' %> />
+                    <label class="form-check-label" for="<%= feature.replace(/\s+/g, '-') %>">
+                      <i class="fas fa-map-marker-alt me-2 text-danger"></i><%= feature %>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+
+          <!-- Security & Accessibility -->
+          <div class="amenity-category">
+            <div class="category-title">
+              <i class="fas fa-shield-alt text-primary"></i>
+              Security & Accessibility
+            </div>
+            <div class="amenities-grid">
+              <% 
+                const security = ["Maintenance Staff", "Security Staff", "Disabled Access"];
+              %>
+              <% security.forEach(feature => { %>
+                <div class="amenity-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="amenities" value="<%= feature %>" id="<%= feature.replace(/\s+/g, '-') %>" <%= selected.includes(feature) ? 'checked' : '' %> />
+                    <label class="form-check-label" for="<%= feature.replace(/\s+/g, '-') %>">
+                      <i class="fas fa-shield-alt me-2 text-primary"></i><%= feature %>
+                    </label>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="d-flex gap-3 pt-4 border-top">
+          <button type="submit" class="btn btn-success btn-lg">
+            <i class="fas fa-save me-2"></i>Update Property
+          </button>
+          <a href="<%= cancelUrl %>" class="btn btn-secondary btn-lg">
+            <i class="fas fa-times me-2"></i>Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let slugManuallyEdited = false;
+
+    function generateSlugFromTitle(title) {
+      return title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    function updateSlug() {
+      if (slugManuallyEdited) return;
+      const title = document.querySelector('input[name="title"]').value;
+      const slug = generateSlugFromTitle(title);
+      document.querySelector('input[name="slug"]').value = slug;
+    }
+
+    window.onload = () => {
+      const titleInput = document.querySelector('input[name="title"]');
+      const slugInput = document.querySelector('input[name="slug"]');
+
+      titleInput.addEventListener('input', updateSlug);
+      slugInput.addEventListener('input', () => {
+        slugManuallyEdited = true;
+      });
+    };
+
+    // File upload preview
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+      const files = e.target.files;
+      const uploadArea = document.querySelector('.upload-area');
+      
+      if (files.length > 0) {
+        uploadArea.innerHTML = `
+          <div class="upload-icon">
+            <i class="fas fa-check-circle text-success"></i>
+          </div>
+          <h5 class="mb-2 text-success">${files.length} New Image(s) Selected</h5>
+          <p class="text-muted mb-0">These will replace current images when you save</p>
+        `;
+      }
+    });
+
+    // Form validation enhancement
+    document.querySelector('form').addEventListener('submit', function(e) {
+      const requiredFields = document.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.classList.add('is-invalid');
+          isValid = false;
+        } else {
+          field.classList.remove('is-invalid');
+        }
+      });
+      
+      if (!isValid) {
+        e.preventDefault();
+        alert('Please fill in all required fields.');
+      }
+    });
+  </script>
+</body>
+</html>
