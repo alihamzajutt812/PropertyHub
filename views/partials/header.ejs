@@ -1,14 +1,12 @@
-<!-- Header Partial - Save as views/partials/header.ejs -->
 <style>
-    /* Header-specific styles - Add this to your main CSS or in a <style> tag */
     .auth-container {
         display: flex;
         align-items: center;
-        gap: 0.5rem; /* Reduced gap */
+        gap: 0.5rem; 
     }
 
     .navbar {
-        background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+            background: linear-gradient(90deg, #22c55e, #16a34a, #15803d, #166534);
         padding: 0;
         margin-bottom: 1px;
         width: 100%;
@@ -19,8 +17,8 @@
     }
 
     .nav-container {
-        max-width:100%;
-        margin: 0 auto;
+        width:100%;
+        /* margin: 0 auto; */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -95,15 +93,14 @@
         display: flex;
         align-items: center;
         gap: 0.3rem; /* Reduced gap */
-        background: rgba(255, 255, 255, 0.1);
         padding: 0.4rem 0.8rem; /* Reduced padding */
         border-radius: 20px;
-        backdrop-filter: blur(10px);
         white-space: nowrap;
         font-size: 0.85rem; /* Smaller font */
         max-width: 150px; /* Limit width */
         overflow: hidden;
         text-overflow: ellipsis;
+        background: white;
     }
 
     .welcome-text i {
@@ -538,7 +535,7 @@
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="/admin/users" class="logout-btn">
+                    <a href="/admin/agents" class="logout-btn">
                         <i class="fas fa-users"></i>
                         <span>Manage Users</span>
                     </a>
@@ -625,7 +622,7 @@
             navbar.style.backdropFilter = 'blur(20px)';
             navbar.style.boxShadow = '0 8px 30px rgba(45, 80, 22, 0.3)';
         } else {
-            navbar.style.background = 'linear-gradient(135deg, #2d5016 0%, #1a3009 100%)';
+            navbar.style.background = 'linear-gradient(135deg, #1a472a 0%, #2f7d40 100%)';
             navbar.style.backdropFilter = 'none';
             navbar.style.boxShadow = '0 4px 20px rgba(45, 80, 22, 0.15)';
         }

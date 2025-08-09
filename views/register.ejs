@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Register' %></title>
   <link rel="stylesheet" href="/public/css/javascript.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,6 +31,7 @@
       position: relative;
       overflow-x: hidden;
       min-height: 100vh;
+      line-height: 1.6;
     }
 
     /* Animated Background */
@@ -84,6 +86,7 @@
       position: relative;
       overflow: hidden;
       transition: all 0.3s ease;
+      width: 100%;
     }
 
     .register-card::before {
@@ -116,6 +119,7 @@
       justify-content: center;
       box-shadow: 0 8px 20px rgba(45, 80, 22, 0.2);
       transition: transform 0.3s ease;
+      flex-shrink: 0;
     }
 
     .brand-icon:hover {
@@ -129,10 +133,12 @@
 
     .brand-text {
       text-align: left;
+      flex: 1;
+      min-width: 0;
     }
 
     .brand-title {
-      font-size: 1.8rem;
+      font-size: clamp(1.5rem, 4vw, 1.8rem);
       font-weight: 700;
       background: var(--gradient-primary);
       -webkit-background-clip: text;
@@ -144,7 +150,7 @@
 
     .brand-subtitle {
       color: #666;
-      font-size: 0.9rem;
+      font-size: clamp(0.85rem, 2vw, 0.9rem);
       font-weight: 400;
     }
 
@@ -172,7 +178,7 @@
       font-weight: 600;
       color: var(--primary-green);
       margin-bottom: 0.5rem;
-      font-size: 0.9rem;
+      font-size: clamp(0.85rem, 2vw, 0.9rem);
       letter-spacing: 0.3px;
     }
 
@@ -199,7 +205,7 @@
       padding: 1rem 1rem 1rem 2.8rem;
       border: 2px solid #f0f4f8;
       border-radius: 12px;
-      font-size: 0.95rem;
+      font-size: clamp(0.9rem, 2vw, 0.95rem);
       background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
@@ -235,7 +241,7 @@
       border-radius: 12px;
       color: white;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: clamp(0.95rem, 2vw, 1rem);
       cursor: pointer;
       transition: all 0.3s ease;
       position: relative;
@@ -274,6 +280,11 @@
       position: relative;
       overflow: hidden;
       transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(-10px);
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
     .agency-fields::before {
@@ -288,22 +299,15 @@
     }
 
     .agency-fields.show {
-      animation: slideInUp 0.4s ease;
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 500px;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
     }
 
     .agency-title {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 2.5vw, 1.1rem);
       font-weight: 600;
       color: var(--primary-green);
       margin-bottom: 1rem;
@@ -320,7 +324,7 @@
     .login-link {
       text-align: center;
       color: #666;
-      font-size: 0.9rem;
+      font-size: clamp(0.85rem, 2vw, 0.9rem);
       font-weight: 500;
     }
 
@@ -359,12 +363,33 @@
       padding: 1rem;
       margin-bottom: 1.2rem;
       border-left: 4px solid #e53e3e;
-      font-size: 0.9rem;
+      font-size: clamp(0.85rem, 2vw, 0.9rem);
+      word-wrap: break-word;
     }
 
     .alert-danger i {
       margin-right: 0.6rem;
       font-size: 1rem;
+    }
+
+    /* Password requirements display */
+    .password-requirements {
+      background: rgba(45, 80, 22, 0.05);
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      border-radius: 8px;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      font-size: clamp(0.75rem, 1.5vw, 0.8rem);
+      color: #666;
+    }
+
+    .password-requirements ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    .password-requirements li {
+      margin-bottom: 0.2rem;
     }
 
     /* File input custom styling */
@@ -391,7 +416,9 @@
       transition: all 0.3s ease;
       color: #666;
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: clamp(0.85rem, 2vw, 0.9rem);
+      justify-content: center;
+      text-align: center;
     }
 
     .file-input-label:hover {
@@ -406,10 +433,41 @@
       color: var(--secondary-green);
     }
 
-    /* Responsive Design */
+    /* Enhanced Responsive Design */
+    @media (max-width: 992px) {
+      .main-container {
+        padding: 0.75rem;
+      }
+      
+      .register-wrapper {
+        max-width: 700px;
+      }
+      
+      .register-card {
+        padding: 1.8rem;
+        border-radius: 20px;
+      }
+      
+      .form-row {
+        gap: 1.2rem;
+      }
+      
+      .agency-fields {
+        padding: 1.3rem;
+      }
+
+      .agency-fields.show {
+        padding-top: 1.3rem;
+        padding-bottom: 1.3rem;
+      }
+    }
+
     @media (max-width: 768px) {
       .main-container {
         padding: 0.5rem;
+        align-items: flex-start;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
       }
       
       .register-card {
@@ -432,19 +490,38 @@
         text-align: center;
       }
       
-      .brand-title {
-        font-size: 1.6rem;
-      }
-      
       .agency-fields {
         padding: 1.2rem;
+        margin: 1.2rem 0;
+      }
+
+      .agency-fields.show {
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
+      }
+      
+      .form-control,
+      .form-select {
+        padding: 0.95rem 0.95rem 0.95rem 2.6rem;
+      }
+      
+      .input-icon {
+        left: 0.9rem;
+        font-size: 0.95rem;
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 576px) {
+      .main-container {
+        padding: 0.25rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+      
       .register-card {
         padding: 1.2rem;
-        margin: 0.5rem;
+        margin: 0.25rem;
+        border-radius: 16px;
       }
       
       .brand-icon {
@@ -456,14 +533,9 @@
         font-size: 1.3rem;
       }
       
-      .brand-title {
-        font-size: 1.5rem;
-      }
-      
       .form-control,
       .form-select {
-        padding: 0.9rem 0.9rem 0.9rem 2.5rem;
-        font-size: 0.9rem;
+        padding: 0.9rem 0.9rem 0.9rem 2.4rem;
       }
       
       .input-icon {
@@ -473,7 +545,139 @@
       
       .btn-register {
         padding: 1rem;
-        font-size: 0.95rem;
+        margin: 1.2rem 0 0.8rem;
+      }
+      
+      .agency-fields {
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+
+      .agency-fields.show {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+      
+      .password-requirements {
+        padding: 0.7rem;
+      }
+      
+      .password-requirements ul {
+        padding-left: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .register-card {
+        padding: 1rem;
+        margin: 0.125rem;
+        border-radius: 14px;
+      }
+      
+      .form-row {
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+      }
+      
+      .form-control,
+      .form-select {
+        padding: 0.85rem 0.85rem 0.85rem 2.2rem;
+        border-radius: 10px;
+      }
+      
+      .input-icon {
+        left: 0.7rem;
+        font-size: 0.85rem;
+      }
+      
+      .btn-register {
+        padding: 0.9rem;
+        border-radius: 10px;
+        margin: 1rem 0 0.6rem;
+      }
+      
+      .agency-fields {
+        padding: 0.9rem;
+        border-radius: 12px;
+      }
+
+      .agency-fields.show {
+        padding-top: 0.9rem;
+        padding-bottom: 0.9rem;
+      }
+      
+      .file-input-label {
+        padding: 0.8rem;
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .file-input-label i {
+        margin-right: 0;
+        margin-bottom: 0.3rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .main-container {
+        padding: 0.125rem;
+      }
+      
+      .register-card {
+        padding: 0.8rem;
+        margin: 0.125rem;
+      }
+      
+      .brand-icon {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .brand-icon i {
+        font-size: 1.2rem;
+      }
+      
+      .form-control,
+      .form-select {
+        padding: 0.8rem 0.8rem 0.8rem 2rem;
+        font-size: 0.85rem;
+      }
+      
+      .input-icon {
+        left: 0.6rem;
+        font-size: 0.8rem;
+      }
+      
+      .btn-register {
+        padding: 0.85rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Landscape orientation on mobile devices */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .main-container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+      
+      .form-header {
+        margin-bottom: 1rem;
+      }
+      
+      .form-row {
+        margin-bottom: 1rem;
+      }
+      
+      .btn-register {
+        margin: 1rem 0 0.8rem;
+      }
+    }
+
+    /* High DPI displays */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .register-card {
+        border-width: 0.5px;
       }
     }
 
@@ -491,6 +695,39 @@
     .form-select:focus {
       outline: 2px solid rgba(76, 175, 80, 0.5);
       outline-offset: 2px;
+    }
+
+    /* Focus visible for better keyboard navigation */
+    .btn-register:focus-visible,
+    .form-control:focus-visible,
+    .form-select:focus-visible,
+    .file-input-label:focus-visible {
+      outline: 2px solid var(--secondary-green);
+      outline-offset: 2px;
+    }
+
+    /* Ensure text remains readable at all sizes */
+    @media (max-width: 320px) {
+      .brand-title {
+        font-size: 1.4rem;
+      }
+      
+      .brand-subtitle {
+        font-size: 0.8rem;
+      }
+      
+      .form-label {
+        font-size: 0.8rem;
+      }
+      
+      .form-control,
+      .form-select {
+        font-size: 0.8rem;
+      }
+      
+      .password-requirements {
+        font-size: 0.7rem;
+      }
     }
   </style>
 </head>
@@ -526,6 +763,7 @@
                     name="name" 
                     id="name"
                     placeholder="Enter your full name"
+                    value="<%= typeof formData !== 'undefined' && formData.name ? formData.name : '' %>"
                     required 
                     autocomplete="name"
                   />
@@ -542,6 +780,7 @@
                     name="email" 
                     id="email"
                     placeholder="Enter your email"
+                    value="<%= typeof formData !== 'undefined' && formData.email ? formData.email : '' %>"
                     required 
                     autocomplete="email"
                   />
@@ -560,6 +799,7 @@
                     name="phone" 
                     id="phone"
                     placeholder="Enter phone number"
+                    value="<%= typeof formData !== 'undefined' && formData.phone ? formData.phone : '' %>"
                     required 
                     autocomplete="tel"
                   />
@@ -571,8 +811,8 @@
                 <label for="role" class="form-label">Account Type</label>
                 <div class="input-group">
                   <select name="role" class="form-select" id="role" required onchange="toggleAgencyFields()">
-                    <option value="agent" selected>Real Estate Agent</option>
-                    <option value="agency">Real Estate Agency</option>
+                    <option value="agent" <%= typeof formData !== 'undefined' && formData.role === 'agent' ? 'selected' : '' %>>Real Estate Agent</option>
+                    <option value="agency" <%= typeof formData !== 'undefined' && formData.role === 'agency' ? 'selected' : '' %>>Real Estate Agency</option>
                   </select>
                   <i class="fas fa-briefcase input-icon"></i>
                 </div>
@@ -594,6 +834,16 @@
                   />
                   <i class="fas fa-lock input-icon"></i>
                 </div>
+                <div class="password-requirements">
+                  <strong>Password requirements:</strong>
+                  <ul>
+                    <li>At least 8 characters long</li>
+                    <li>One uppercase letter (A-Z)</li>
+                    <li>One lowercase letter (a-z)</li>
+                    <li>One number (0-9)</li>
+                    <li>One special character (!@#$%^&*)</li>
+                  </ul>
+                </div>
               </div>
 
               <div class="form-group">
@@ -614,7 +864,7 @@
             </div>
 
             <!-- Agency Fields -->
-            <div id="agencyFields" class="agency-fields" style="display: none;">
+            <div id="agencyFields" class="agency-fields" style="display: <%= typeof formData !== 'undefined' && formData.role === 'agency' ? 'block' : 'none' %>;">
               <div class="agency-title">
                 <i class="fas fa-building"></i>
                 Agency Details
@@ -630,6 +880,7 @@
                       name="agencyName" 
                       id="agencyName"
                       placeholder="Enter agency name"
+                      value="<%= typeof formData !== 'undefined' && formData.agencyName ? formData.agencyName : '' %>"
                     />
                     <i class="fas fa-building input-icon"></i>
                   </div>
@@ -644,6 +895,7 @@
                       name="agencyAddress" 
                       id="agencyAddress"
                       placeholder="Enter agency address"
+                      value="<%= typeof formData !== 'undefined' && formData.agencyAddress ? formData.agencyAddress : '' %>"
                     />
                     <i class="fas fa-map-marker-alt input-icon"></i>
                   </div>
@@ -684,15 +936,47 @@
 
   <script>
     function toggleAgencyFields() {
-      const role = document.getElementById("role").value;
+      const role = document.getElementById("role");
       const agencyFields = document.getElementById("agencyFields");
       
-      if (role === "agency") {
+      if (!role || !agencyFields) {
+        console.error('Required elements not found');
+        return;
+      }
+      
+      console.log('Current role:', role.value);
+      
+      if (role.value === "agency") {
+        console.log('Showing agency fields');
         agencyFields.style.display = "block";
-        setTimeout(() => agencyFields.classList.add("show"), 10);
+        // Force reflow to ensure display is applied before adding class
+        agencyFields.offsetHeight;
+        agencyFields.classList.add("show");
+        
+        // Make agency fields required
+        const agencyInputs = document.querySelectorAll('#agencyFields input[type="text"]');
+        agencyInputs.forEach(input => {
+          input.setAttribute('required', 'required');
+        });
       } else {
+        console.log('Hiding agency fields');
         agencyFields.classList.remove("show");
-        setTimeout(() => agencyFields.style.display = "none", 300);
+        
+        // Remove required attribute and clear values
+        const agencyInputs = document.querySelectorAll('#agencyFields input');
+        agencyInputs.forEach(input => {
+          input.removeAttribute('required');
+          if (input.type !== 'file') {
+            input.value = '';
+          }
+        });
+        
+        // Hide after animation completes
+        setTimeout(() => {
+          if (!agencyFields.classList.contains('show')) {
+            agencyFields.style.display = "none";
+          }
+        }, 400);
       }
     }
 
@@ -708,9 +992,103 @@
     });
 
     // Ensure correct display on load
-    window.onload = toggleAgencyFields;
-  </script>
+    window.onload = function() {
+      console.log('Page loaded, initializing...');
+      
+      // Initialize toggle
+      toggleAgencyFields();
+      
+      // Set up role change handler (backup in case inline onchange doesn't work)
+      const roleSelect = document.getElementById('role');
+      if (roleSelect) {
+        roleSelect.addEventListener('change', toggleAgencyFields);
+      }
+      
+      // Show agency fields if there's form data with agency role
+      <% if (typeof formData !== 'undefined' && formData.role === 'agency') { %>
+        // EJS: Agency role detected, show agency fields on load
+        const agencyFields = document.getElementById("agencyFields");
+        if (agencyFields) {
+          agencyFields.style.display = "block";
+          setTimeout(() => agencyFields.classList.add("show"), 10);
+        }
+      <% } %>
+    };
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    // Enhanced mobile experience
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize agency fields on page load
+      toggleAgencyFields();
+      
+      // Add smooth scrolling behavior
+      document.documentElement.style.scrollBehavior = 'smooth';
+      
+      // Optimize for mobile keyboards
+      const inputs = document.querySelectorAll('input, select');
+      inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+          // Small delay to ensure keyboard is up
+          setTimeout(() => {
+            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 300);
+        });
+      });
+
+      // Form validation feedback
+      const form = document.querySelector('form');
+      form.addEventListener('submit', function(e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (password !== confirmPassword) {
+          e.preventDefault();
+          alert('Passwords do not match!');
+          return;
+        }
+        
+        // Show loading state
+        const submitBtn = document.querySelector('.btn-register');
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 0.6rem;"></i>Creating Account...';
+        submitBtn.disabled = true;
+      });
+
+      // Phone number formatting
+      document.getElementById('phone').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) value = value.slice(0, 11);
+        e.target.value = value;
+      });
+
+      // Real-time password validation
+      document.getElementById('password').addEventListener('input', function(e) {
+        const password = e.target.value;
+        const requirements = document.querySelectorAll('.password-requirements li');
+        
+        // Reset colors
+        requirements.forEach(req => req.style.color = '#666');
+        
+        // Check requirements
+        if (password.length >= 8) requirements[0].style.color = 'var(--secondary-green)';
+        if (/[A-Z]/.test(password)) requirements[1].style.color = 'var(--secondary-green)';
+        if (/[a-z]/.test(password)) requirements[2].style.color = 'var(--secondary-green)';
+        if (/[0-9]/.test(password)) requirements[3].style.color = 'var(--secondary-green)';
+        if (/[!@#$%^&*]/.test(password)) requirements[4].style.color = 'var(--secondary-green)';
+      });
+
+      // Confirm password validation
+      document.getElementById('confirmPassword').addEventListener('input', function(e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = e.target.value;
+        
+        if (confirmPassword && password !== confirmPassword) {
+          e.target.style.borderColor = '#e53e3e';
+          e.target.style.boxShadow = '0 0 0 3px rgba(229, 62, 62, 0.1)';
+        } else {
+          e.target.style.borderColor = '#f0f4f8';
+          e.target.style.boxShadow = 'none';
+        }
+      });
+    });
+  </script>
 </body>
 </html>

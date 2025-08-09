@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title><%= typeof pageTitle !== 'undefined' ? pageTitle : 'Login' %></title>
   <link rel="stylesheet" href="/public/css/javascript.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -262,7 +263,7 @@
       margin-right: 0.5rem;
     }
 
-    /* Responsive Design */
+    /* Enhanced Responsive Design */
     @media (max-width: 768px) {
       .main-container {
         padding: 1rem;
@@ -286,6 +287,27 @@
       .brand-icon i {
         font-size: 1.25rem;
       }
+      
+      /* Landscape optimization */
+      @media (orientation: landscape) {
+        .main-container {
+          padding: 0.5rem;
+          align-items: flex-start;
+        }
+        
+        .login-wrapper {
+          max-width: 90%;
+          margin-top: 1rem;
+        }
+        
+        .login-card {
+          padding: 1.5rem;
+        }
+        
+        .brand-section {
+          margin-bottom: 1.5rem;
+        }
+      }
     }
 
     @media (max-width: 480px) {
@@ -294,8 +316,8 @@
       }
       
       .login-card {
-        padding: 1.5rem;
-        border-radius: 16px;
+        padding: 1.75rem;
+        border-radius: 18px;
         margin: 0.25rem;
       }
       
@@ -326,11 +348,27 @@
       .form-group {
         margin-bottom: 1.25rem;
       }
+      
+      /* Landscape optimization */
+      @media (orientation: landscape) {
+        .login-card {
+          padding: 1.25rem;
+        }
+        
+        .brand-section {
+          margin-bottom: 1rem;
+        }
+        
+        .divider {
+          margin: 1.25rem 0;
+        }
+      }
     }
 
     @media (max-width: 360px) {
       .login-card {
-        padding: 1.25rem;
+        padding: 1.5rem;
+        border-radius: 16px;
       }
       
       .brand-section {
@@ -340,6 +378,80 @@
       .divider {
         margin: 1.5rem 0 1.25rem;
       }
+      
+      /* Specific adjustments for small screens */
+      .brand-title {
+        font-size: 1.3rem;
+      }
+      
+      .brand-subtitle {
+        font-size: 0.8rem;
+      }
+      
+      .form-control {
+        padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+        font-size: 0.9rem;
+      }
+      
+      .input-icon {
+        left: 0.8rem;
+        font-size: 0.85rem;
+      }
+      
+      .btn-primary,
+      .btn-outline {
+        padding: 0.85rem;
+        font-size: 0.92rem;
+      }
+      
+      .divider span {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .login-card {
+        padding: 1.25rem;
+        border-radius: 14px;
+      }
+      
+      .brand-icon {
+        width: 45px;
+        height: 45px;
+      }
+      
+      .brand-icon i {
+        font-size: 1.1rem;
+      }
+      
+      .brand-title {
+        font-size: 1.25rem;
+      }
+      
+      .form-control {
+        padding: 0.75rem 0.75rem 0.75rem 2.25rem;
+        font-size: 0.85rem;
+      }
+      
+      .input-icon {
+        left: 0.75rem;
+      }
+      
+      .btn-primary,
+      .btn-outline {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Touch interaction improvements */
+    .btn-primary, 
+    .btn-outline {
+      min-height: 48px; /* Minimum touch target size */
+    }
+    
+    .form-control {
+      min-height: 48px; /* Minimum touch target size */
     }
 
     /* Accessibility improvements */
@@ -348,6 +460,10 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+      }
+      
+      .login-card {
+        transform: none !important;
       }
     }
 
@@ -360,6 +476,10 @@
       .login-card {
         border-width: 2px;
       }
+      
+      .btn-outline {
+        border-width: 2px;
+      }
     }
 
     /* Focus styles for keyboard navigation */
@@ -369,76 +489,119 @@
       outline: 2px solid var(--secondary-green);
       outline-offset: 2px;
     }
+
+    .password-toggle {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+  color: #333;
+}
+
+.input-wrapper {
+  position: relative;
+}
+    
+    /* Prevent zoom on input focus */
+    @media screen and (max-width: 768px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
   </style>
 </head>
-<body>
-  <div class="main-container">
-    <div class="login-wrapper">
-      <div class="login-card">
-        <div class="brand-section">
-          <div class="brand-icon">
-            <i class="fas fa-home"></i>
-          </div>
-          <h1 class="brand-title">Real Estate</h1>
-          <p class="brand-subtitle">Welcome back! Please sign in to continue</p>
-        </div>
+<body>   
+<div class="main-container">     
+  <div class="login-wrapper">       
+    <div class="login-card">         
+      <div class="brand-section">           
+        <div class="brand-icon">             
+          <i class="fas fa-home"></i>           
+        </div>           
+        <h1 class="brand-title">Property Hub</h1>           
+        <p class="brand-subtitle">Welcome back! Please sign in to continue</p>         
+      </div>          
 
-        <% if (typeof error !== 'undefined') { %>
-          <div class="alert alert-danger">
-            <i class="fas fa-exclamation-triangle"></i><%= error %>
-          </div>
-        <% } %>
+      <% if (typeof error !== 'undefined') { %>           
+        <div class="alert alert-danger">             
+          <i class="fas fa-exclamation-triangle"></i><%= error %>           
+        </div>         
+      <% } %>          
 
-        <form method="POST" action="/login">
-          <div class="form-group">
-            <label for="email" class="form-label">Email Address</label>
-            <div class="input-wrapper">
-              <input 
-                type="email" 
-                class="form-control" 
-                name="email" 
-                id="email" 
-                placeholder="Enter your email"
-                required 
-                autocomplete="email"
-              />
-              <i class="fas fa-envelope input-icon"></i>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <div class="input-wrapper">
-              <input 
-                type="password" 
-                class="form-control" 
-                name="password" 
-                id="password" 
-                placeholder="Enter your password"
-                required 
-                autocomplete="current-password"
-              />
-              <i class="fas fa-lock input-icon"></i>
-            </div>
-          </div>
-          
-          <button type="submit" class="btn-primary">
-            <i class="fas fa-sign-in-alt" style="margin-right: 0.5rem;"></i>
-            Sign In
-          </button>
-        </form>
+      <form method="POST" action="/login">           
+        <div class="form-group">             
+          <label for="email" class="form-label">Email Address</label>             
+          <div class="input-wrapper">               
+            <input                  
+              type="email"                  
+              class="form-control"                  
+              name="email"                  
+              id="email"                  
+              placeholder="Enter your email"                 
+              required                  
+              autocomplete="email"               
+            />               
+            <i class="fas fa-envelope input-icon"></i>             
+          </div>           
+        </div>                      
 
-        <div class="divider">
-          <span>New to Real Estate?</span>
-        </div>
+        <div class="form-group">             
+          <label for="password" class="form-label">Password</label>             
+          <div class="input-wrapper">               
+            <input                  
+              type="password"                  
+              class="form-control"                  
+              name="password"                  
+              id="password"                  
+              placeholder="Enter your password"                 
+              required                  
+              autocomplete="current-password"               
+            />               
+            <i class="fas fa-lock input-icon"></i>
+            <i class="fas fa-eye password-toggle" id="passwordToggle" onclick="togglePassword()"></i>             
+          </div>           
+        </div>                      
 
-        <a href="/register" class="btn-outline">
-          <i class="fas fa-user-plus" style="margin-right: 0.5rem;"></i>
-          Create Account
-        </a>
-      </div>
-    </div>
-  </div>
+        <button type="submit" class="btn-primary">             
+          <i class="fas fa-sign-in-alt" style="margin-right: 0.5rem;"></i>             
+          Sign In           
+        </button>         
+      </form>          
+
+      <div class="divider">           
+        <span>New to Real Estate?</span>         
+      </div>          
+
+      <a href="/register" class="btn-outline">           
+        <i class="fas fa-user-plus" style="margin-right: 0.5rem;"></i>           
+        Create Account         
+      </a>       
+    </div>     
+  </div>   
+</div>
+
+<script>
+function togglePassword() {
+  const passwordField = document.getElementById('password');
+  const passwordToggle = document.getElementById('passwordToggle');
+  
+  if (passwordField.type === 'password') {
+    passwordField.type = 'text';
+    passwordToggle.classList.remove('fa-eye');
+    passwordToggle.classList.add('fa-eye-slash');
+  } else {
+    passwordField.type = 'password';
+    passwordToggle.classList.remove('fa-eye-slash');
+    passwordToggle.classList.add('fa-eye');
+  }
+}
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

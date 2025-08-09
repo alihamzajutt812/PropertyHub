@@ -49,12 +49,17 @@ router.post(
 );
 
 router.post(
-  '/projects/:slug/delete',
+  '/projects/delete/:slug',
   requireAuth,
   requireRole('agency'),
   agencyController.deleteAgencyProject
 );
-
+router.post(
+  '/properties/delete/:id',
+  requireAuth,
+  requireRole('agency'),
+  agencyController.deleteAgencyProperty
+);
 // Show edit profile form
 router.get(
   '/edit-profile',

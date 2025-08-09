@@ -186,6 +186,24 @@ exports.postEditAgencyProperty = async (req, res) => {
     res.status(500).send('Error updating property');
   }
 };
+exports.deleteAgencyProperty = async (req, res) => {
+  try {
+    const property = await Property.findOne({ _id: req.params.id, agent: req.user._id });
+    if (!property) return res.status(404).send('Property not found or unauthorized');
+    if (property.imageUrls && property.imageUrls.length > 0) {
+      const deletePromises = property.imageUrls.map(url => {
+        const publicId = getPublicIdFromUrl(url);
+        return deleteFromCloudinary(publicId);
+      });
+      await Promise.all(deletePromises);
+    } 
+    await property.deleteOne();
+    res.redirect('/agency/dashboard');
+  } catch (error) {
+    console.error('❌ Error deleting agency property:', error.message);
+    res.status(500).send('Error deleting property');
+  }
+};
 
 // Show “Add Project” form (GET /agency/projects/new)
 exports.getAddAgencyProjectForm = (req, res) => {
@@ -305,7 +323,7 @@ exports.postEditAgencyProject = async (req, res) => {
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-');
 
-    // ❗ Check duplicate slug
+    // Check duplicate slug
     const existing = await Project.findOne({
       slug: normalizedSlug,
       agency: req.user._id,

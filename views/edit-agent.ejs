@@ -4,28 +4,275 @@
   <meta charset="UTF-8">
   <title><%= pageTitle || 'Edit Agent' %></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-green: #22c55e;
+      --dark-green: #16a34a;
+      --light-green: #dcfce7;
+      --emerald: #10b981;
+      --sage: #84cc16;
+      --mint: #f0fdf4;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--mint) 0%, var(--light-green) 100%);
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .form-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 500px;
+      border: 2px solid var(--light-green);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-green), var(--emerald), var(--sage));
+    }
+
+    h2 {
+      color: var(--dark-green);
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 2.2rem;
+      text-shadow: 0 2px 4px rgba(34, 197, 94, 0.1);
+    }
+
+    .form-label {
+      color: var(--dark-green);
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 15px 18px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-green);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+      background: white;
+      outline: none;
+    }
+
+    .form-control:hover {
+      border-color: var(--emerald);
+      background: white;
+    }
+
+    .btn {
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 2px solid transparent;
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+      border-color: var(--primary-green);
+      color: white;
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    }
+
+    .btn-success:hover {
+      background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+    }
+
+    .btn-secondary {
+      background: white;
+      border-color: #d1d5db;
+      color: #6b7280;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-secondary:hover {
+      background: #f9fafb;
+      border-color: var(--primary-green);
+      color: var(--dark-green);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .mb-3 {
+      margin-bottom: 25px !important;
+      position: relative;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 35px;
+      flex-wrap: wrap;
+    }
+
+    /* Input animations */
+    .form-control {
+      position: relative;
+    }
+
+    .mb-3::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-green);
+      transition: width 0.3s ease;
+    }
+
+    .mb-3:focus-within::after {
+      width: 100%;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container-wrapper {
+        padding: 15px;
+        align-items: flex-start;
+        padding-top: 30px;
+      }
+      
+      .form-container {
+        padding: 25px;
+        margin: 0;
+        border-radius: 15px;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+      }
+      
+      .form-control {
+        padding: 12px 15px;
+        font-size: 16px; /* Prevent zoom on iOS */
+      }
+      
+      .btn {
+        padding: 12px 20px;
+        font-size: 15px;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      
+      .button-group {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .ms-2 {
+        margin-left: 0 !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 20px;
+        border-radius: 12px;
+      }
+      
+      h2 {
+        font-size: 1.6rem;
+      }
+      
+      .form-control {
+        padding: 10px 12px;
+      }
+    }
+
+    /* Accessibility improvements */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus indicators for keyboard navigation */
+    .btn:focus-visible,
+    .form-control:focus-visible {
+      outline: 3px solid var(--primary-green);
+      outline-offset: 2px;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      .form-container {
+        border: 3px solid var(--dark-green);
+      }
+      
+      .form-control {
+        border-width: 3px;
+      }
+    }
+  </style>
 </head>
 <body class="p-4">
-  <h2>Edit Agent</h2>
+  <div class="container-wrapper">
+    <div class="form-container">
+      <h2>Edit Agent</h2>
 
-  <form method="POST" action="<%= editAction %>" style="max-width: 400px;">
-    <div class="mb-3">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" class="form-control" value="<%= agent.name %>" required />
+      <form method="POST" action="<%= editAction %>">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" id="name" name="name" class="form-control" value="<%= agent.name %>" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" class="form-control" value="<%= agent.email %>" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="text" id="phone" name="phone" class="form-control" value="<%= agent.phone %>" required />
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn btn-success">Update</button>
+          <a href="<%= cancelUrl || '/admin/dashboard' %>" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
     </div>
-
-    <div class="mb-3">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" class="form-control" value="<%= agent.email %>" required />
-    </div>
-
-    <div class="mb-3">
-      <label for="phone">Phone</label>
-      <input type="text" id="phone" name="phone" class="form-control" value="<%= agent.phone %>" required />
-    </div>
-
-    <button type="submit" class="btn btn-success">Update</button>
-    <a href="<%= cancelUrl || '/admin/dashboard' %>" class="btn btn-secondary ms-2">Cancel</a>
-  </form>
+  </div>
 </body>
 </html>
